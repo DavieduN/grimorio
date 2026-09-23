@@ -1,0 +1,6 @@
+\begin{itemize}
+    \item Lembre-se de usar \textbf{compressão de coordenadas/pontos} se o domínio for muito grande. Alguns problemas exigem manter duas SegTrees simultâneas.
+    \item Funciona para qualquer operação \textbf{associativa}.
+    \item É comum utilizar operações \textbf{não-comutativas} (ex: manter a soma do prefixo, sufixo e valor total de um subarray). Tenha atenção especial na função de \textit{merge}: a operação com o filho esquerdo pode diferir do direito, e a ordem importa estritamente.
+    \item \textbf{Range update sem Lazy:} É possível fazer atualizações em intervalo se você tratar a SegTree como um \textit{difference array} (array de diferenças) e pedir a soma de prefixo para a consulta.
+\end{itemize}

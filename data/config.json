@@ -1,0 +1,8 @@
+{
+  "intro": ["template"],
+  "notebook": {
+    "Estruturas de Dados": ["dsu", "segtree"],
+    "Grafos": ["toposort"]
+  },
+  "theory": ["permutations", "lis"]
+}

@@ -1,0 +1,210 @@
+\documentclass[10pt,a4paper,twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\geometry{left=1cm,right=1cm,top=1cm,bottom=1.5cm}
+
+\lstset{
+    language=C++,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{red},
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=2,
+    numbers=none,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {ã}{{\~a}}1 {é}{{\'e}}1 {ê}{{\^e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {õ}{{\~o}}1 {ô}{{\^o}}1 {ú}{{\'u}}1 {ç}{{\c{c}}}1 {Á}{{\'A}}1 {Ã}{{\~A}}1 {É}{{\'E}}1 {Ê}{{\^E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Õ}{{\~O}}1 {Ô}{{\^O}}1 {Ú}{{\'U}}1 {Ç}{{\c{C}}}1
+}
+
+\begin{document}
+\twocolumn
+\tableofcontents
+\newpage
+
+\section{Introdução}
+\begin{lstlisting}
+#include <bits/stdc++.h>
+using namespace std;
+
+#define fastio ios_base::sync_with_stdio(0); cin.tie(0)
+#define all(a) a.begin(), a.end()
+#define rall(a) a.rbegin(), a.rend()
+#define sz(a) (int) (a).size()
+#define ll long long
+#define ld long double
+
+void dbg_out(string s) { cerr << endl; }
+template<typename H, typename... T>
+void dbg_out(string s, H h, T... t){
+    do{ cerr << s[0]; s = s.substr(1);
+    } while (sz(s) && s[0] != ',');
+    cerr << " = " << h;
+    dbg_out(s, t...);
+}
+
+#ifdef DEBUG
+#define dbg(...) dbg_out(#__VA_ARGS__, __VA_ARGS__)
+#else
+#define dbg(...) 42
+#endif
+
+void solution(){
+    int n;
+    cin >> n;
+    for (int i=0; i<n; i++){
+        
+    }
+}
+
+signed main(){
+    fastio;
+    int cases=1;
+    //cin >> cases;
+    for (int i=0; i<cases; i++){
+        solution();
+    }
+}
+\end{lstlisting}
+\section{Estruturas de Dados}
+\subsection{Dsu}
+\begin{lstlisting}
+6a9 class DSU{
+673   public:
+1a8     int n;
+f92     vector<int> p, r, s;
+     
+ea1     DSU(int nodes): p (nodes), r (nodes, 1), s (nodes, 1){
+b67         n = nodes;
+9e4         for (int i=0; i<n; i++) p[i] = i;
+dc3     }
+    	  /*
+ac5     ll find(ll x){
+eab         return (p[x] == x? x : p[x] = find(p[x]));
+07f     }
+c4c     */
+57b     int find(int x){
+42e         int root=x;
+39f         while (root != p[root]) root = p[root];
+133         int aux;
+016         while (x != p[x]){
+615             aux = p[x];
+88a             p[x] = root;
+835             x = aux;
+8db         }
+ea5         return x;
+eb6     }
+     
+2e7     bool unite(int x, int y){
+f08         x = find(x), y = find(y);
+e65         if (x == y) return false;
+7ce         if (r[x] > r[y]) swap(x, y);
+b6a         if (r[x] == r[y]) r[y]++;
+d16         s[y] += s[x];
+ae9         p[x] = y;
+15a         n--;
+8a6         return true;
+c37     }
+     
+082 };
+
+
+\end{lstlisting}
+\subsection{Segtree}
+\begin{lstlisting}
+853 template <class T> class Segtree{
+673 public:
+1a8     int n;
+53f     T neutral;
+22c     vector<T> t;
+8c2     Segtree(int size, T neutral): neutral(neutral){
+ba7         n = 1;
+321         while (size > n) n <<= 1;
+7ce         t.resize(2*n);
+62b     }
+    
+1cb     T op(T a, T b){
+534         return a + b;
+4ed     }
+    
+6ab     T query(int l, int r, int idx, int a, int b){
+41a         if (r < a || b < l) return neutral;
+877         if (l <= a && b <= r) return t[idx];
+e26         int m = (a+b)/2;
+0f2         return op(query(l, r, 2*idx, a, m), query(l, r, 2*idx+1, m+1, b));
+fd6     }
+190     T query(int l, int r){ return query(l, r, 1, 0, n-1); }
+    
+671     void add(int idx, T v){
+aab         if (idx < 0 || idx >= n) return;
+cae         t[idx += n] += v; // aqui era pra ser op() invés de +=
+4ef         for (idx >>= 1; idx; idx >>= 1) t[idx] = op(t[2*idx], t[2*idx+1]);
+7ef     }
+fdf };
+
+
+\end{lstlisting}
+\section{Grafos}
+\subsection{Toposort}
+Retorna as componentes na ordenação topológica reversa. O número de componentes é \textit{ncomp}.
+Talvez o certo seja \textit{min(low[u], num[v])}, mas vou usar assim até achar um erro.
+
+Estado em \textit{vis[]}:
+\begin{itemize}
+    \item \textbf{0}: não visitado
+    \item \textbf{1}: finalizado
+    \item \textbf{2}: ativo
+\end{itemize}
+\vspace{0.2cm}
+\begin{lstlisting}
+e3b vector<int> g [mx], comp (mx), low (mx), num (mx), vis (mx);
+82b stack<int> vert;
+22d int ti=0;
+c02 int ncomp=0;
+e0e void tarzan(int u){
+873     low[u] = num[u] = ++ti;
+10a     vis[u] = 2; // active
+7a5     vert.push(u);
+     
+7b9     for (auto v: g[u]){
+d90         if (!vis[v]){
+5c1             tarzan(v);
+ab6             low[u] = min(low[u], low[v]);
+555         }
+2d3         if (vis[v] == 2) low[u] = min(low[u], low[v]); // talvez o certo seja min(low[u], num[v]) mas vou usar assim até achar um erro
+dd6     }
+     
+382     if (num[u] == low[u]){
+a8f         ncomp++;
+690         while (!vert.empty()){
+08a             int v = vert.top(); vert.pop();
+d6f             comp[v] = ncomp;
+cca             vis[v] = 1;
+163             if (u == v) break;
+287         }
+734     }
+a7f }
+\end{lstlisting}
+\section{Teoria e Apêndices}
+\subsection{Permutations}
+\begin{itemize}
+    \item O código para calcular a paridade da permutação está no caderno.
+    \item \textbf{Face Value:} Use as definições de permutação de forma literal. Uma permutação de tamanho $N$ consiste em inteiros estritamente distintos de $1$ a $N$.
+    \item \textbf{Divisibilidade:} Devido à limitação de limite, existem no máximo $\lfloor N/k \rfloor$ elementos na permutação que são múltiplos de $k$.
+    \item \textbf{Validação Rápida:} Como o multiset de uma permutação válida de tamanho $M$ é sempre único $\{1, 2, \dots, M\}$, uma abordagem direta para checar se um subarray forma uma permutação é comparar os multisets utilizando algoritmos de \textbf{Hashing}.
+\end{itemize}
+
+\subsection{Lis}
+\begin{itemize}
+    \item Encontrar a LIS de um array reverso é equivalente a encontrar a \textbf{LDS} (Longest Decreasing Subsequence).
+    \item Necessita de adaptação para \textit{longest non-increasing subsequence}. Para restaurar a subsequência, use um array auxiliar (vetor de pais).
+    \item \textbf{Patience sorting:} Pensar no problema como formar pilhas, colocando o elemento atual na pilha com o menor topo que seja maior que ele. (Útil para modelagem geométrica ou de restrições).
+    \item O número de LIS distintas pode ser calculado em $\mathcal{O}(N \log N)$ com SegTree.
+    \item \textbf{LCS em Permutações:} A primeira permutação define o índice alvo para cada valor. Você substitui os valores da segunda permutação pelos índices correspondentes da primeira. A tarefa se reduz a achar a LIS do novo array, já que cada elemento aparece exatamente uma vez.
+\end{itemize}
+
+\end{document}

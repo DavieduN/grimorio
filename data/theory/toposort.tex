@@ -1,0 +1,7 @@
+\begin{itemize}
+    \item \textbf{Algoritmo de Kahn:} O código padrão (por graus de entrada) está no caderno.
+    \item Aparece frequentemente em problemas que não parecem ser de grafos à primeira vista. Basta modelar as dependências como um \textbf{DAG} (relações estritas de "vem antes / depois").
+    \item A ordenação topológica permite aplicar \textbf{Programação Dinâmica (DP)} processando os nós linearmente.
+    \item \textbf{Via DFS:} Adicione o nó a uma lista ao final da chamada recursiva e, no término, reverta a lista.
+    \item \textbf{Validação (Deteção de Ciclos):} É mandatório checar se a ordenação resultante é válida. Para toda aresta $U \to V$, se $ind[V] \le ind[U]$ na ordenação final, existe um ciclo e o toposort é inválido.
+\end{itemize}

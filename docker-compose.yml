@@ -1,0 +1,13 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./data:/data
+      - ./build:/build
+    environment:
+      - DADOS_PATH=/data
+      - BUILD_PATH=/build

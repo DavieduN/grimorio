@@ -1,0 +1,7 @@
+\begin{itemize}
+    \item Encontrar a LIS de um array reverso é equivalente a encontrar a \textbf{LDS} (Longest Decreasing Subsequence).
+    \item Necessita de adaptação para \textit{longest non-increasing subsequence}. Para restaurar a subsequência, use um array auxiliar (vetor de pais).
+    \item \textbf{Patience sorting:} Pensar no problema como formar pilhas, colocando o elemento atual na pilha com o menor topo que seja maior que ele. (Útil para modelagem geométrica ou de restrições).
+    \item O número de LIS distintas pode ser calculado em $\mathcal{O}(N \log N)$ com SegTree.
+    \item \textbf{LCS em Permutações:} A primeira permutação define o índice alvo para cada valor. Você substitui os valores da segunda permutação pelos índices correspondentes da primeira. A tarefa se reduz a achar a LIS do novo array, já que cada elemento aparece exatamente uma vez.
+\end{itemize}
