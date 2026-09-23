@@ -1,15 +1,11 @@
 \contentsline {part}{I\hspace {1em}Code Reference}{1}{}%
-\contentsline {section}{\numberline {1}Diversos}{1}{}%
-\contentsline {subsection}{\numberline {1.1}Bitmasksubsets}{1}{}%
-\contentsline {subsection}{\numberline {1.2}Lis}{1}{}%
-\contentsline {section}{\numberline {2}Estruturas de Dados}{1}{}%
-\contentsline {subsection}{\numberline {2.1}Dsu}{1}{}%
-\contentsline {subsection}{\numberline {2.2}Segtree}{1}{}%
-\contentsline {section}{\numberline {3}Grafos}{2}{}%
-\contentsline {subsection}{\numberline {3.1}Toposort}{2}{}%
+\contentsline {subsection}{\numberline {1}Bitmasksubsets}{1}{}%
+\contentsline {subsection}{\numberline {2}Dsu}{1}{}%
+\contentsline {subsection}{\numberline {3}Lis}{1}{}%
+\contentsline {subsection}{\numberline {4}Segtree}{1}{}%
+\contentsline {subsection}{\numberline {5}Toposort}{2}{}%
 \contentsline {part}{II\hspace {1em}Theoretical Appendix}{2}{}%
-\contentsline {section}{\numberline {4}Teoria e Demonstrações}{2}{}%
-\contentsline {subsection}{\numberline {4.1}Lis}{2}{}%
-\contentsline {subsection}{\numberline {4.2}Permutations}{2}{}%
-\contentsline {subsection}{\numberline {4.3}Segtree}{2}{}%
-\contentsline {subsection}{\numberline {4.4}Toposort}{3}{}%
+\contentsline {subsection}{\numberline {1}Lis}{2}{}%
+\contentsline {subsection}{\numberline {2}Permutations}{2}{}%
+\contentsline {subsection}{\numberline {3}Segtree}{2}{}%
+\contentsline {subsection}{\numberline {4}Toposort}{2}{}%

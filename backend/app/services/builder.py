@@ -95,11 +95,11 @@ class NotebookBuilder:
             out_lines.append(prefix + line)
         return "\n".join(out_lines)
 
-    def _get_section_for_module(self, mod_id: str, layout_dict: Dict[str, List[str]]) -> str:
+    def _get_section_for_module(self, mod_id: str, layout_dict: Dict[str, List[str]], fallback_name: str) -> str:
         for section_name, items in layout_dict.items():
             if mod_id in items:
                 return section_name
-        return self.config.fallback_section_name
+        return fallback_name
 
     def _add_to_dict(self, target_dict: Dict[str, List[Module]], section: str, mod: Module):
         if section not in target_dict:
@@ -108,8 +108,17 @@ class NotebookBuilder:
 
     def _route_modules(self):
         for mod_id, mod in self.modules.items():
+            if mod.overrides.omit_code:
+                mod.files.code = None
+                mod.files.header = None
+            if mod.overrides.omit_theory:
+                mod.files.theory = None
+
             has_code = bool(mod.files.code)
             has_theory = bool(mod.files.theory)
+            
+            if not has_code and not has_theory:
+                continue
             
             keep_theory = self.config.keep_theory_with_code
             if mod.overrides.keep_theory_with_code is not None:
@@ -117,26 +126,26 @@ class NotebookBuilder:
 
             if has_code and has_theory:
                 if keep_theory:
-                    sec = self._get_section_for_module(mod_id, self.layout.code_sections)
+                    sec = self._get_section_for_module(mod_id, self.layout.code_sections, self.config.fallback_code_section_name)
                     self._add_to_dict(self.code_sections, sec, mod)
                 else:
                     mod_code = mod.model_copy(deep=True)
                     mod_code.files.theory = None
-                    sec_code = self._get_section_for_module(mod_id, self.layout.code_sections)
+                    sec_code = self._get_section_for_module(mod_id, self.layout.code_sections, self.config.fallback_code_section_name)
                     self._add_to_dict(self.code_sections, sec_code, mod_code)
                     
                     mod_theory = mod.model_copy(deep=True)
                     mod_theory.files.code = None
                     mod_theory.files.header = None
-                    sec_theory = self._get_section_for_module(mod_id, self.layout.theory_sections)
+                    sec_theory = self._get_section_for_module(mod_id, self.layout.theory_sections, self.config.fallback_theory_section_name)
                     self._add_to_dict(self.theory_sections, sec_theory, mod_theory)
                     
             elif has_code:
-                sec = self._get_section_for_module(mod_id, self.layout.code_sections)
+                sec = self._get_section_for_module(mod_id, self.layout.code_sections, self.config.fallback_code_section_name)
                 self._add_to_dict(self.code_sections, sec, mod)
                 
             elif has_theory:
-                sec = self._get_section_for_module(mod_id, self.layout.theory_sections)
+                sec = self._get_section_for_module(mod_id, self.layout.theory_sections, self.config.fallback_theory_section_name)
                 self._add_to_dict(self.theory_sections, sec, mod)
 
     def _render_module(self, mod: Module):
@@ -168,23 +177,29 @@ class NotebookBuilder:
                 with open(theory_path, 'r', encoding='utf-8') as f:
                     self.tex_lines.append(f.read() + "\n")
 
-    def _render_notebook_part(self, title: str, sections_dict: Dict[str, List[Module]]):
+    def _render_notebook_part(self, title: str, sections_dict: Dict[str, List[Module]], fallback_name: str):
         if not sections_dict:
             return
 
         self.tex_lines.append(rf"\part{{{title}}}")
-        
-        other_name = self.config.fallback_section_name
 
-        if len(sections_dict) == 1 and other_name in sections_dict:
-            modules = sorted(sections_dict[other_name], key=lambda m: m.id)
+        self.tex_lines.append(r"\setcounter{section}{0}")
+        self.tex_lines.append(r"\setcounter{subsection}{0}")
+        
+        if len(sections_dict) == 1 and fallback_name in sections_dict:
+            self.tex_lines.append(r"\begingroup")
+            self.tex_lines.append(r"\renewcommand{\thesubsection}{\arabic{subsection}}") 
+            
+            modules = sorted(sections_dict[fallback_name], key=lambda m: m.id)
             for mod in modules:
                 self._render_module(mod)
+                
+            self.tex_lines.append(r"\endgroup")
             return
 
-        sec_names = sorted([s for s in sections_dict.keys() if s != other_name])
-        if other_name in sections_dict:
-            sec_names.append(other_name)
+        sec_names = sorted([s for s in sections_dict.keys() if s != fallback_name])
+        if fallback_name in sections_dict:
+            sec_names.append(fallback_name)
 
         for sec_name in sec_names:
             if not sections_dict[sec_name]:
@@ -206,13 +221,15 @@ class NotebookBuilder:
             self.tex_lines.append(r"\newpage")
 
         if self.config.code_before_theory:
-            self._render_notebook_part("Code Reference", self.code_sections)
-            self._render_notebook_part("Theoretical Appendix", self.theory_sections)
+            self._render_notebook_part(self.config.code_notebook_title, self.code_sections, self.config.fallback_code_section_name)
+            self._render_notebook_part(self.config.theory_notebook_title, self.theory_sections, self.config.fallback_theory_section_name)
         else:
-            self._render_notebook_part("Theoretical Appendix", self.theory_sections)
-            self._render_notebook_part("Code Reference", self.code_sections)
+            self._render_notebook_part(self.config.theory_notebook_title, self.theory_sections, self.config.fallback_theory_section_name)
+            self._render_notebook_part(self.config.code_notebook_title, self.code_sections, self.config.fallback_code_section_name)
 
-        self.tex_lines.append(r"\mbox{}") 
+        if not self.code_sections and not self.theory_sections:
+            self.tex_lines.append(r"\mbox{}") 
+            
         self.tex_lines.append(r"\end{document}")
         
         out_tex_path = os.path.join(BUILD_PATH, "grimorio.tex")

@@ -12,6 +12,8 @@ class ModuleFiles(BaseModel):
 class LocalOverride(BaseModel):
     keep_theory_with_code: Optional[bool] = None
     print_header: Optional[bool] = None
+    omit_code: Optional[bool] = False
+    omit_theory: Optional[bool] = False
 
 class Module(BaseModel):
     id: str
@@ -38,7 +40,10 @@ class GlobalConfig(BaseModel):
     code_before_theory: bool = True
     print_headers: bool = True
     keep_theory_with_code: bool = False
-    fallback_section_name: str = "Other"
+    fallback_code_section_name: str = "Other"
+    fallback_theory_section_name: str = "Other"
+    code_notebook_title: str = "Code"
+    theory_notebook_title: str = "Theoretical"
 
 class NotebookLayout(BaseModel):
     code_sections: Dict[str, List[str]] = {}

@@ -27,7 +27,10 @@
 \tableofcontents
 \newpage
 \part{Code Reference}
-\section{Diversos}
+\setcounter{section}{0}
+\setcounter{subsection}{0}
+\begingroup
+\renewcommand{\thesubsection}{\arabic{subsection}}
 \subsection{Bitmasksubsets}
 \begin{lstlisting}
 827 for (int mask = 0; mask < (1 << n); mask++) {
@@ -37,21 +40,6 @@ e0a    for (int submask = mask; submask != 0; submask = (submask - 1) & mask) {
 70a    }
 e71 }
 \end{lstlisting}
-\subsection{Lis}
-\begin{lstlisting}
-f16 int find_lis(const vector<int> &a) {
-471 	vector<int> dp;
-941 	for (int i : a) {
-01d 		int pos = lower_bound(dp.begin(), dp.end(), i) - dp.begin();
-56a 		if (pos == dp.size()) dp.push_back(i);
-d2f 		else dp[pos] = i;
-    		// we can have a new, longer subsequence or
-    		// we can make the ending element smaller
-7af 	}
-269 	return dp.size();
-b75 }
-\end{lstlisting}
-\section{Estruturas de Dados}
 \subsection{Dsu}
 \begin{lstlisting}
 6a9 class DSU{
@@ -95,6 +83,20 @@ c37     }
 
 
 \end{lstlisting}
+\subsection{Lis}
+\begin{lstlisting}
+f16 int find_lis(const vector<int> &a) {
+471 	vector<int> dp;
+941 	for (int i : a) {
+01d 		int pos = lower_bound(dp.begin(), dp.end(), i) - dp.begin();
+56a 		if (pos == dp.size()) dp.push_back(i);
+d2f 		else dp[pos] = i;
+    		// we can have a new, longer subsequence or
+    		// we can make the ending element smaller
+7af 	}
+269 	return dp.size();
+b75 }
+\end{lstlisting}
 \subsection{Segtree}
 \begin{lstlisting}
 853 template <class T> class Segtree{
@@ -129,7 +131,6 @@ fdf };
 
 
 \end{lstlisting}
-\section{Grafos}
 \subsection{Toposort}
 Retorna as componentes na ordenação topológica reversa. O número de componentes é \textit{ncomp}.
 Talvez o certo seja \textit{min(low[u], num[v])}, mas vou usar assim até achar um erro.
@@ -170,8 +171,12 @@ cca             vis[v] = 1;
 734     }
 a7f }
 \end{lstlisting}
+\endgroup
 \part{Theoretical Appendix}
-\section{Teoria e Demonstrações}
+\setcounter{section}{0}
+\setcounter{subsection}{0}
+\begingroup
+\renewcommand{\thesubsection}{\arabic{subsection}}
 \subsection{Lis}
 \begin{itemize}
     \item Encontrar a LIS de um array reverso é equivalente a encontrar a \textbf{LDS} (Longest Decreasing Subsequence).
@@ -206,5 +211,5 @@ a7f }
     \item \textbf{Validação (Deteção de Ciclos):} É mandatório checar se a ordenação resultante é válida. Para toda aresta $U \to V$, se $ind[V] \le ind[U]$ na ordenação final, existe um ciclo e o toposort é inválido.
 \end{itemize}
 
-\mbox{}
+\endgroup
 \end{document}
