@@ -145,8 +145,12 @@ class NotebookBuilder:
                 self._add_to_dict(self.code_sections, sec, mod)
                 
             elif has_theory:
-                sec = self._get_section_for_module(mod_id, self.layout.theory_sections, self.config.fallback_theory_section_name)
-                self._add_to_dict(self.theory_sections, sec, mod)
+                if keep_theory:
+                    sec = self._get_section_for_module(mod_id, self.layout.code_sections, self.config.fallback_code_section_name)
+                    self._add_to_dict(self.code_sections, sec, mod)
+                else:
+                    sec = self._get_section_for_module(mod_id, self.layout.theory_sections, self.config.fallback_theory_section_name)
+                    self._add_to_dict(self.theory_sections, sec, mod)
 
     def _render_module(self, mod: Module):
         title = mod.id.replace('_', ' ').title()

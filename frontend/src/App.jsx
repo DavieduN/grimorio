@@ -121,7 +121,11 @@ function App() {
       } else if (hasCode) {
         gCode[cSec].push({ ...mod, _renderContext: 'code' });
       } else if (hasTheory) {
-        gTheory[tSec].push({ ...mod, _renderContext: 'theory' });
+        if (keepTheory) {
+          gCode[cSec].push({ ...mod, _renderContext: 'full' }); 
+        } else {
+          gTheory[tSec].push({ ...mod, _renderContext: 'theory' });
+        }
       }
     });
 

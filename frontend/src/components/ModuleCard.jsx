@@ -113,15 +113,13 @@ export function ModuleCard({
               color="purple"
             />
             
-            {files.code && (
-              <button 
-                onClick={handleTheoryLocationChange}
-                title={locationTooltip}
-                className={`p-1 rounded flex items-center justify-center transition-all ${locationBtnClass}`}
-              >
-                <LocationIcon />
-              </button>
-            )}
+            <button 
+              onClick={handleTheoryLocationChange}
+              title={locationTooltip}
+              className={`p-1 rounded flex items-center justify-center transition-all ${locationBtnClass}`}
+            >
+              <LocationIcon />
+            </button>
           </div>
         )}
         
