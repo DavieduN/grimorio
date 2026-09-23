@@ -23,52 +23,33 @@
 
 \begin{document}
 \twocolumn
+
 \tableofcontents
 \newpage
-
-\section{Introdução}
+\part{Code Reference}
+\section{Diversos}
+\subsection{Bitmasksubsets}
 \begin{lstlisting}
-#include <bits/stdc++.h>
-using namespace std;
-
-#define fastio ios_base::sync_with_stdio(0); cin.tie(0)
-#define all(a) a.begin(), a.end()
-#define rall(a) a.rbegin(), a.rend()
-#define sz(a) (int) (a).size()
-#define ll long long
-#define ld long double
-
-void dbg_out(string s) { cerr << endl; }
-template<typename H, typename... T>
-void dbg_out(string s, H h, T... t){
-    do{ cerr << s[0]; s = s.substr(1);
-    } while (sz(s) && s[0] != ',');
-    cerr << " = " << h;
-    dbg_out(s, t...);
-}
-
-#ifdef DEBUG
-#define dbg(...) dbg_out(#__VA_ARGS__, __VA_ARGS__)
-#else
-#define dbg(...) 42
-#endif
-
-void solution(){
-    int n;
-    cin >> n;
-    for (int i=0; i<n; i++){
-        
-    }
-}
-
-signed main(){
-    fastio;
-    int cases=1;
-    //cin >> cases;
-    for (int i=0; i<cases; i++){
-        solution();
-    }
-}
+827 for (int mask = 0; mask < (1 << n); mask++) {
+e0a    for (int submask = mask; submask != 0; submask = (submask - 1) & mask) {
+982        int subset = mask ^ submask;
+           // do whatever you need to do here
+70a    }
+e71 }
+\end{lstlisting}
+\subsection{Lis}
+\begin{lstlisting}
+f16 int find_lis(const vector<int> &a) {
+471 	vector<int> dp;
+941 	for (int i : a) {
+01d 		int pos = lower_bound(dp.begin(), dp.end(), i) - dp.begin();
+56a 		if (pos == dp.size()) dp.push_back(i);
+d2f 		else dp[pos] = i;
+    		// we can have a new, longer subsequence or
+    		// we can make the ending element smaller
+7af 	}
+269 	return dp.size();
+b75 }
 \end{lstlisting}
 \section{Estruturas de Dados}
 \subsection{Dsu}
@@ -159,7 +140,7 @@ Estado em \textit{vis[]}:
     \item \textbf{1}: finalizado
     \item \textbf{2}: ativo
 \end{itemize}
-\vspace{0.2cm}
+
 \begin{lstlisting}
 e3b vector<int> g [mx], comp (mx), low (mx), num (mx), vis (mx);
 82b stack<int> vert;
@@ -189,15 +170,8 @@ cca             vis[v] = 1;
 734     }
 a7f }
 \end{lstlisting}
-\section{Teoria e Apêndices}
-\subsection{Permutations}
-\begin{itemize}
-    \item O código para calcular a paridade da permutação está no caderno.
-    \item \textbf{Face Value:} Use as definições de permutação de forma literal. Uma permutação de tamanho $N$ consiste em inteiros estritamente distintos de $1$ a $N$.
-    \item \textbf{Divisibilidade:} Devido à limitação de limite, existem no máximo $\lfloor N/k \rfloor$ elementos na permutação que são múltiplos de $k$.
-    \item \textbf{Validação Rápida:} Como o multiset de uma permutação válida de tamanho $M$ é sempre único $\{1, 2, \dots, M\}$, uma abordagem direta para checar se um subarray forma uma permutação é comparar os multisets utilizando algoritmos de \textbf{Hashing}.
-\end{itemize}
-
+\part{Theoretical Appendix}
+\section{Teoria e Demonstrações}
 \subsection{Lis}
 \begin{itemize}
     \item Encontrar a LIS de um array reverso é equivalente a encontrar a \textbf{LDS} (Longest Decreasing Subsequence).
@@ -207,4 +181,30 @@ a7f }
     \item \textbf{LCS em Permutações:} A primeira permutação define o índice alvo para cada valor. Você substitui os valores da segunda permutação pelos índices correspondentes da primeira. A tarefa se reduz a achar a LIS do novo array, já que cada elemento aparece exatamente uma vez.
 \end{itemize}
 
+\subsection{Permutations}
+\begin{itemize}
+    \item O código para calcular a paridade da permutação está no caderno.
+    \item \textbf{Face Value:} Use as definições de permutação de forma literal. Uma permutação de tamanho $N$ consiste em inteiros estritamente distintos de $1$ a $N$.
+    \item \textbf{Divisibilidade:} Devido à limitação de limite, existem no máximo $\lfloor N/k \rfloor$ elementos na permutação que são múltiplos de $k$.
+    \item \textbf{Validação Rápida:} Como o multiset de uma permutação válida de tamanho $M$ é sempre único $\{1, 2, \dots, M\}$, uma abordagem direta para checar se um subarray forma uma permutação é comparar os multisets utilizando algoritmos de \textbf{Hashing}.
+\end{itemize}
+
+\subsection{Segtree}
+\begin{itemize}
+    \item Lembre-se de usar \textbf{compressão de coordenadas/pontos} se o domínio for muito grande. Alguns problemas exigem manter duas SegTrees simultâneas.
+    \item Funciona para qualquer operação \textbf{associativa}.
+    \item É comum utilizar operações \textbf{não-comutativas} (ex: manter a soma do prefixo, sufixo e valor total de um subarray). Tenha atenção especial na função de \textit{merge}: a operação com o filho esquerdo pode diferir do direito, e a ordem importa estritamente.
+    \item \textbf{Range update sem Lazy:} É possível fazer atualizações em intervalo se você tratar a SegTree como um \textit{difference array} (array de diferenças) e pedir a soma de prefixo para a consulta.
+\end{itemize}
+
+\subsection{Toposort}
+\begin{itemize}
+    \item \textbf{Algoritmo de Kahn:} O código padrão (por graus de entrada) está no caderno.
+    \item Aparece frequentemente em problemas que não parecem ser de grafos à primeira vista. Basta modelar as dependências como um \textbf{DAG} (relações estritas de "vem antes / depois").
+    \item A ordenação topológica permite aplicar \textbf{Programação Dinâmica (DP)} processando os nós linearmente.
+    \item \textbf{Via DFS:} Adicione o nó a uma lista ao final da chamada recursiva e, no término, reverta a lista.
+    \item \textbf{Validação (Deteção de Ciclos):} É mandatório checar se a ordenação resultante é válida. Para toda aresta $U \to V$, se $ind[V] \le ind[U]$ na ordenação final, existe um ciclo e o toposort é inválido.
+\end{itemize}
+
+\mbox{}
 \end{document}

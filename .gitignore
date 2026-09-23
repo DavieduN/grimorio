@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# Frontend (React/Vite)
+node_modules/
+dist/
+dist-ssr/
+.eslintcache
+*.local
+
+# Build / LaTeX
+build/*
+!build/.gitkeep
+*.aux
+*.log
+*.toc
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.pdf
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

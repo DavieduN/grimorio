@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.9.23)  23 SEP 2026 01:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.9.23)  23 SEP 2026 04:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -287,42 +287,58 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Underfull \vbox (badness 3058) has occurred while \output is active []
 
 
-Underfull \hbox (badness 1043) in paragraph at lines 206--207
+
+
+Underfull \hbox (badness 1043) in paragraph at lines 180--181
 []\T1/cmr/m/n/10 O número de LIS dis-tin-tas pode ser cal-cu-lado em
  []
 
 
+Underfull \hbox (badness 1242) in paragraph at lines 196--197
+[]\T1/cmr/m/n/10 É co-mum uti-lizar op-er-ações \T1/cmr/bx/n/10 não-comutativas
+ \T1/cmr/m/n/10 (ex:
+ []
 
-[2] (/build/grimorio.aux)
+
+
+[2]
+
+
+
+[3
+
+] (/build/grimorio.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 5567 strings out of 475102
- 74725 string characters out of 5764877
- 1044303 words of memory out of 5000000
- 28544 multiletter control sequences out of 15000+600000
- 566805 words of font info for 54 fonts, out of 8000000 for 9000
+ 5534 strings out of 475102
+ 74400 string characters out of 5764877
+ 1030303 words of memory out of 5000000
+ 28509 multiletter control sequences out of 15000+600000
+ 568351 words of font info for 56 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 57i,5n,65p,345b,1228s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,6n,65p,345b,1638s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </root/.texlive2025/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk> </
 root/.texlive2025/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000.600pk> </root/
-.texlive2025/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </root/.texl
-ive2025/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0800.525pk> </root/.texlive20
+.texlive2025/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0800.525pk> </root/.texl
+ive2025/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </root/.texlive20
 25/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </root/.texlive2025/te
 xmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </root/.texlive2025/texmf-v
-ar/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmsy10.pfb>
-Output written on /build/grimorio.pdf (2 pages, 106887 bytes).
+ar/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </root/.texlive2025/texmf-var/fo
+nts/pk/ljfour/jknappen/ec/ecbx1440.600pk></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy10.pfb>
+Output written on /build/grimorio.pdf (3 pages, 123560 bytes).
 PDF statistics:
- 305 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
+ 349 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -9,5 +9,5 @@ services:
       - ./data:/data
       - ./build:/build
     environment:
-      - DADOS_PATH=/data
+      - DATA_PATH=/data
       - BUILD_PATH=/build
